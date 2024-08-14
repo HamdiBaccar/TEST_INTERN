@@ -1,21 +1,29 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+require('dotenv').config(); // Load environment variables
 
-// Connect to the database (assuming you have a connect.js file in the config folder)
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+
+// Connect to the database using the connect.js file
 require('./config/connect');
 
 const eventController = require('./controller/eventController');
+const authRoutes = require('./controller/auth');
+const FriendSuggRoutes = require('./controller/FriendSuggestion');
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
 
-app.use('/api/events', eventController);
+// Routes
+app.use('/api/events', eventController); // Your existing routes
+app.use('/api/auth', authRoutes); // Your teammate's auth routes
+app.use('/api', FriendSuggRoutes); // Your teammate's friend suggestion routes
 
-app.listen(3000, () => {
-    console.log("Server is running on port 3000");
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
