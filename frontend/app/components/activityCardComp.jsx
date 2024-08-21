@@ -4,13 +4,20 @@ import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import MapIcon from '../../assets/imgsJsx/map'
 import SaveIcon from '../../assets/imgsJsx/save'
+import { format } from 'date-fns'; // Import de date-fns
+import { enUS } from 'date-fns/locale';
 
 SplashScreen.preventAutoHideAsync();
 
 const { width, height } = Dimensions.get('window');
 
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return format(date, "do MMMM - hh:mm a", { locale: enUS }); // Formatage de la date
+  };
 
-const ActivityCardComp = () => {
+
+const ActivityCardComp = ({activity}) => {
 
     const [fontsLoaded, error] = useFonts({
         "Poppins-Black": require("../../assets/fonts/Poppins-Black.ttf"),
@@ -40,15 +47,15 @@ const ActivityCardComp = () => {
     <View>
         <View style={styles.activityCard}>
              <Image 
-                source='../../assets/acticity1.png'
+                source={{uri : activity.GroupImage}}
                 style={styles.image}
             />
             <View style={styles.activityDataStyle}>
-                <Text style={styles.date}>24TH JUNE-10:00 AM</Text>
-                <Text style={styles.activityTitle}>Robotics Workshop</Text>
+                <Text style={styles.date}>{formatDate(activity.GroupCreationDate)}</Text>
+                <Text style={styles.activityTitle}>{activity.GroupName}</Text>
                 <View style={styles.locationContainer}>
                     <MapIcon fill={'rgba(116, 118, 136, 1)'}></MapIcon>
-                    <Text style={styles.location}>Carthage, Tunis</Text>
+                    <Text style={styles.location}>{activity.GroupLocation}</Text>
                 </View>
             </View>
             <SaveIcon  fill="rgba(235, 87, 87, 1)" style={styles.saveIconStyle}></SaveIcon>
@@ -106,7 +113,6 @@ const styles = StyleSheet.create({
         lineHeight : 19.5,
         fontFamily : 'Poppins-ExtraBold',
         color : 'rgba(116, 118, 136, 1)',
-        marginTop : -3
     },
     saveIconStyle : {
         width : 16.11,

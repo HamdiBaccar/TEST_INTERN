@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useFonts } from 'expo-font';
 import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Button, TextInput as PaperTextInput, Provider, DefaultTheme } from 'react-native-paper';
-import { router } from 'expo-router';
+import { router,useRouter, useLocalSearchParams } from 'expo-router';
 import BackButton from '../components/goBackButton';
 import EmailAuthIcon from '../../assets/imgsJsx/emailAuth';
 import LockIcon from '../../assets/imgsJsx/lock';
@@ -17,6 +17,11 @@ const customTheme = {
 };
 
 const SignUp2 = () => {
+
+  const router = useRouter();
+  const { parentName, address, phone } = useLocalSearchParams();
+
+
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../../assets/fonts/Poppins-Bold.ttf"),
@@ -67,8 +72,17 @@ const SignUp2 = () => {
       const userData = {
         parentEmail: parentEmail,
         parentPassword: parentPassword,
-        // Other necessary fields can be added here as needed
       };
+      router.push({
+        pathname: '/sign-up3', // ou '/sign-up3' si vous allez directement à la page 3
+        params: {
+            parentName: parentName,
+            address: address,
+            phone: phone,
+            parentEmail: parentEmail,
+            parentPassword: parentPassword,
+        },
+    });
 
       const response = await fetch('http://localhost:3000/api/auth/signup', {
         method: 'POST',

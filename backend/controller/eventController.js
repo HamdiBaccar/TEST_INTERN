@@ -26,7 +26,7 @@ eventController.get('/get-all',async (req,res)=>{
         )
         .catch(
             (err)=>{
-                res.send(error);
+                res.send(err);
             }
         )
 })

@@ -5,6 +5,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import RightFleshIcon from '../../assets/imgsJsx/rightFlesh';
 import { router } from 'expo-router';
 import ActivityCardComp from './activityCardComp';
+import apiActivityService from '../service/activityService';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -42,6 +43,18 @@ const NearbyActivitiesComp = () => {
         return null;
       }
 
+      const [activity,setActivity] = useState([]);
+        useEffect(() => {
+          apiActivityService.getAllActivities()
+          .then(response =>{
+            setActivity(Array.isArray(response.data) ? response.data : []);
+            console.log(response.data);
+          })
+          .catch(err =>{
+            console.log(err);
+          })
+        },[])
+
 
   return (
     <View style={styles.container} >
@@ -52,8 +65,14 @@ const NearbyActivitiesComp = () => {
             </TouchableOpacity>
             <RightFleshIcon style={styles.iconStyle1}></RightFleshIcon>
         </View>
-        <ActivityCardComp></ActivityCardComp>
-        <ActivityCardComp></ActivityCardComp>
+        {Array.isArray(activity) && activity.length > 0 ? (
+          activity.map((activity, index) => (
+            <ActivityCardComp key={index} activity={activity} />
+          ))
+        ) : (
+          <Text>No activities found</Text>
+        )}
+
     </View>
   )
 }

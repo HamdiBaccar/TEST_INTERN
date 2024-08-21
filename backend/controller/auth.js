@@ -30,6 +30,20 @@ router.post('/signup', async (req, res) => {
     }
 });
 
+router.get('/get-all',async (req,res)=>{
+    User.find()
+        .then(
+            (users) => {
+                res.send(users);
+            }
+        )
+        .catch(
+            (err)=>{
+                res.send(err);
+            }
+        )
+})
+
 
 router.post('/signin', async (req, res) => {
     try {

@@ -3,7 +3,7 @@ import { useFonts } from 'expo-font';
 import { Alert, StyleSheet, Text, View, ActivityIndicator,TouchableOpacity } from 'react-native';
 import { Checkbox, Button, TextInput as PaperTextInput, Provider, DefaultTheme } from 'react-native-paper';
 import * as Location from 'expo-location';
-import { router } from 'expo-router';
+import { router , useRouter, useLocalSearchParams} from 'expo-router';
 import ProfileCircle from '../../assets/SVGs/ProfileCircle'
 import AgeIcon from '../../assets/SVGs/AgeIcon'
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -19,6 +19,8 @@ const customTheme = {
 
 
 const Payment = () => {
+  const { parentName, address, phone, parentEmail, parentPassword } = useLocalSearchParams();
+  console.log(parentName);
   const [fontsLoaded, error] = useFonts({
     "Poppins-Black": require("../../assets/fonts/Poppins-Black.ttf"),
     "Poppins-Bold": require("../../assets/fonts/Poppins-Bold.ttf"),
@@ -114,18 +116,19 @@ const Payment = () => {
 
     try {
       const userData = {
-        CIN: "003304529",
-        parentName: "Mehhhhhhhhrrrez",
-        parentEmail: "Mehhhhhhhrerz@example.com",
-        parentPassword: "hamdi2002",
-        phoneNumber: "22456978",
-        address: "Med Alii,Gabes",
+        CIN: "0033404529",
+        parentName: parentName,
+        parentEmail: parentEmail,
+        parentPassword: parentPassword,
+        phoneNumber: phone,
+        address: address,
         paymentInfo: "Payyment-info",
         childUsername: username,
         childAge: age,
-        governorat: localisation,
+        governorat: "localisation",
         confirmedAge: isAgeConfirmed,
       };
+      console.log(userData);
 
       //sending request
       const response = await fetch('http://localhost:3000/api/auth/signup', {

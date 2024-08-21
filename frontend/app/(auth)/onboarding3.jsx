@@ -49,7 +49,7 @@ export default function OBScreen() {
   });
 
   const GoToSignUpPress = () => {
-    router.push('/sign-up2');
+    router.push('/sign-up1');
   };
 
   const GoToSignInPress = () => {

@@ -10,6 +10,7 @@ require('./config/connect');
 const eventController = require('./controller/eventController');
 const authRoutes = require('./controller/auth');
 const FriendSuggRoutes = require('./controller/FriendSuggestion');
+const group_route = require('./routes/groupRoutes');  
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,6 +24,8 @@ app.use(cors());
 app.use('/api/events', eventController); // Your existing routes
 app.use('/api/auth', authRoutes); // Your teammate's auth routes
 app.use('/api', FriendSuggRoutes); // Your teammate's friend suggestion routes
+app.use('/api/group', group_route);
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

@@ -42,7 +42,7 @@ const HeaderHome = () => {
 
         const data = await response.json(); 
         setFriends(data); 
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error('Error fetching suggestions:', error); 
         setError(error.message);

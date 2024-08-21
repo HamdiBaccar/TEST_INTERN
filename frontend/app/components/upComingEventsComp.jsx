@@ -15,6 +15,14 @@ const handlePress = () => {
     router.push('./events'); 
   };
 
+  const handleEventPress = (id) => {
+    // Naviguer vers la page eventDetails avec les détails de l'événement
+    router.push({
+        pathname: '../(pages)/eventDetails',
+        params: { id }  
+    });
+};
+
 const UpComingEventsComp = () => {
 
     const [fontsLoaded, error] = useFonts({
@@ -66,7 +74,9 @@ const UpComingEventsComp = () => {
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {event.map((event, index) => (
-            <EventCard key={index} event={event} />
+                <TouchableOpacity key={index} onPress={() => handleEventPress(event._id)} >
+                    <EventCard event={event}/>
+                </TouchableOpacity>
             ))}
         </ScrollView>
         {/* <TouchableOpacity onPress={()=>router.push('../search')}>

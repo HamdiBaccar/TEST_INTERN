@@ -8,6 +8,8 @@ import UserIcon from '../../assets/icons/UserIcon';
 import AddressIcon from '../../assets/icons/AddressIcon';
 import PhoneIcon from '../../assets/icons/PhoneIcon';
 import BackButton from '../components/goBackButton';
+import { router } from 'expo-router';
+
 
 const PersonalInfo = () => {
     const [fontsLoaded, error] = useFonts({
@@ -79,6 +81,18 @@ const PersonalInfo = () => {
             //     console.error(error);
             //     alert('Error: ' + error.message);
             // }
+        }
+    };
+    const GoToSignUpPress = () => {
+        if (validateFields()) {
+            router.push({
+                pathname: '/sign-up2', // ou '/sign-up3' si vous allez directement à la page 3
+                params: {
+                    parentName: parentName,
+                    address: address,
+                    phone: phone,
+                },
+            });
         }
     };
 
@@ -163,7 +177,7 @@ const PersonalInfo = () => {
                             </View>
                             {errors.phone ? <Text style={styles.errorText}>{errors.phone}</Text> : null}
                         </View>
-                        <TouchableOpacity style={styles.NextButton} onPress={handleNext}>
+                        <TouchableOpacity style={styles.NextButton} onPress={GoToSignUpPress}>
                             <Text style={styles.NextButtonText}>Next</Text>
                         </TouchableOpacity>
                         <Text style={styles.minitext}>Already have an account? <Text style={styles.signInText}>Sign In</Text></Text>
