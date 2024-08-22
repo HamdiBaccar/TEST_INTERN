@@ -1,7 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Stripe = require('stripe');
 const User = require('../models/User');
 
 const router = express.Router();
@@ -9,7 +8,7 @@ const router = express.Router();
 router.post('/signup', async (req, res) => {
     try {
         const {
-            CIN, parentName,parentEmail, parentPassword, phoneNumber,
+             parentName,parentEmail, parentPassword, phoneNumber,
             address,childUsername, childAge,
             governorat, confirmedAge
         } = req.body;
@@ -19,7 +18,7 @@ router.post('/signup', async (req, res) => {
         }
 
         const user = new User({
-            CIN, parentName, parentEmail, parentPassword, phoneNumber,
+             parentName, parentEmail, parentPassword, phoneNumber,
             address, childUsername, childAge,
             governorat, confirmedAge
         });
