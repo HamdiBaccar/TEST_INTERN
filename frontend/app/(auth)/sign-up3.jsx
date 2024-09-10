@@ -121,16 +121,15 @@ const Payment = () => {
         parentPassword: parentPassword,
         phoneNumber: phone,
         address: address,
-        paymentInfo: "Payyment-info",
         childUsername: username,
         childAge: age,
-        governorat: "localisation",
+        governorat: localisation,
         confirmedAge: isAgeConfirmed,
       };
       console.log(userData);
 
       //sending request
-      const response = await fetch('http://localhost:3000/api/auth/signup', {
+      const response = await fetch('http://192.168.1.243:3000/api/auth/signup', {
         method: 'POST',
         body: JSON.stringify(userData),
         headers: {

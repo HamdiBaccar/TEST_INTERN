@@ -1,10 +1,11 @@
+
 import React, { useCallback, useEffect } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity,Dimensions } from 'react-native';
 import { router } from 'expo-router';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import BackButton from "../components/goBackButton";
-
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing, withRepeat, withSequence } from 'react-native-reanimated';
 const { width, height } = Dimensions.get('window');
 
 const OnboardingScreen1 = () => {
@@ -33,6 +34,33 @@ const OnboardingScreen1 = () => {
         return null;
       }
 
+// for image animation
+const scale = useSharedValue(1);
+
+useEffect(() => {
+  scale.value = withRepeat(
+    withSequence(
+      withTiming(0.9, {
+        duration: 1500,
+        easing: Easing.inOut(Easing.ease),
+      }),
+      withTiming(1, {
+        duration: 1000,
+        easing: Easing.inOut(Easing.ease),
+      })
+    ),
+    -1,
+    true
+  );
+}, []);
+
+const animatedImageStyle = useAnimatedStyle(() => {
+  return {
+    transform: [{ scale: scale.value }],
+  };
+});
+
+
 
       const handlePress = () => {
         router.push('/onboarding2'); 
@@ -45,7 +73,11 @@ const OnboardingScreen1 = () => {
         <View>
             <BackButton></BackButton>
             <View style={styles.container}>
-                <Image source={require("../../assets/images/OnBoard1.png")} style={styles.onboardingimage1}></Image>
+            <Animated.Image
+                 source={require("../../assets/images/OnBoard1.png")} 
+                 style={[styles.onboardingimage1,animatedImageStyle]}
+                    resizeMode="contain"
+                 />
                 <Text style={styles.title}>Explore the World</Text>
                 <Text style={styles.subtitle}>Discover New Places and Cultures, {'\n'}Share Your Adventures</Text>
                 <TouchableOpacity style={styles.btnStyle1} onPress={handlePress}>

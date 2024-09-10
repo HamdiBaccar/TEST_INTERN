@@ -52,7 +52,7 @@ const SignIn = () => {
       }
 
       // Make API request
-      const response = await fetch('http://localhost:3000/api/auth/signin', {
+      const response = await fetch('http://192..168.1.243:3000/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

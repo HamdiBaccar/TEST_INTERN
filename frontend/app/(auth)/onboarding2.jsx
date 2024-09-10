@@ -1,8 +1,11 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, SafeAreaView, Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 import { router } from 'expo-router';
-import React from 'react';
+import React, {useEffect} from 'react';
 import BackButton from '../components/goBackButton';
+import Animated, { useSharedValue, useAnimatedStyle, withTiming, Easing, withRepeat, withSequence } from 'react-native-reanimated';
+
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,6 +21,33 @@ const Onboarding = () => {
     "Poppins-SemiBold": require("../../assets/fonts/Poppins-SemiBold.ttf"),
     "Poppins-Thin": require("../../assets/fonts/Poppins-Thin.ttf"),
   });
+
+  // for image animation
+const scale = useSharedValue(1);
+
+useEffect(() => {
+  scale.value = withRepeat(
+    withSequence(
+      withTiming(0.9, {
+        duration: 1500,
+        easing: Easing.inOut(Easing.ease),
+      }),
+      withTiming(1, {
+        duration: 1000,
+        easing: Easing.inOut(Easing.ease),
+      })
+    ),
+    -1,
+    true
+  );
+}, []);
+
+const animatedImageStyle = useAnimatedStyle(() => {
+  return {
+    transform: [{ scale: scale.value }],
+  };
+});
+
 
   if (!fontsLoaded && !error) {
     return null;
@@ -38,9 +68,9 @@ const Onboarding = () => {
     <SafeAreaView className="w-full h-full" style={styles.container}>
       <BackButton></BackButton>
       <View style={styles.imageContainer}>
-        <Image
+      <Animated.Image
           source={require('../../assets/Onboarding2.png')}
-          style={styles.img}
+          style={[styles.img,animatedImageStyle]}
           resizeMode="contain"
         />
       </View>

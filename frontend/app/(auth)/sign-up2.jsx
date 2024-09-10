@@ -84,7 +84,7 @@ const SignUp2 = () => {
         },
     });
 
-      const response = await fetch('http://localhost:3000/api/auth/signup', {
+      const response = await fetch('http://192.168.1.243:3000/api/auth/signup', {
         method: 'POST',
         body: JSON.stringify(userData),
         headers: {
