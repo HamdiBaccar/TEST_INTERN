@@ -116,7 +116,6 @@ const Payment = () => {
 
     try {
       const userData = {
-        CIN: "0033404529",
         parentName: parentName,
         parentEmail: parentEmail,
         parentPassword: parentPassword,
