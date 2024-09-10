@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "66be2d97f3a3a42fd3aae7d9"
+  },
+  "GroupName": "Robotics Workshop",
+  "GroupTopic": "Programmation",
+  "GroupDescription": "Un groupe pour discuter de programmation",
+  "GroupLocation": "Carthage,Tunis",
+  "GroupImage": "../../assets/acticity1.png",
+  "GroupCreationDate": {
+    "$date": "2024-08-15T16:32:23.911Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66bf21988f438c401e21720e"
+  },
+  "GroupName": "Robotics Workshop",
+  "GroupTopic": "Programmation",
+  "GroupDescription": "Un groupe pour discuter de programmation",
+  "GroupLocation": "Carthage,Tunis",
+  "GroupImage": "../../assets/acticity1.png",
+  "GroupCreationDate": {
+    "$date": "2024-08-16T09:53:28.995Z"
+  },
+  "__v": 0
+}]

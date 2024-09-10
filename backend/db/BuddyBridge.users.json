@@ -1,0 +1,128 @@
+[{
+  "_id": {
+    "$oid": "66b4928e4d3f0b7ad9bfd4c8"
+  },
+  "CIN": "12345678",
+  "parentName": "John Doe",
+  "parentEmail": "johndoe@example.com",
+  "parentPassword": "$2a$08$DFhXLPZS3pn9TPJYk5QcJu6tnr7EPX8o0ylBuq3lKvcGkp9JGnt7S",
+  "phoneNumber": "1234567890",
+  "address": "123 Main St",
+  "childUsername": "child123",
+  "childAge": 10,
+  "governorat": "Tunisia,Sousse",
+  "confirmedAge": true,
+  "interests": [
+    "Sport"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b4f767a452994626195142"
+  },
+  "CIN": "87654321",
+  "parentName": "Jane Smith",
+  "parentEmail": "jane.smith@example.com",
+  "parentPassword": "$2a$08$fTP5GLj0ero1tEIuW7YIg.YUQx/4IA4HLI6hMOFF8mcgw9GM0u/Nu",
+  "phoneNumber": "+0987654321",
+  "address": "456 Oak St, Villagetown",
+  "childUsername": "janie2008",
+  "childAge": 10,
+  "governorat": "Tunisia,Sousse",
+  "confirmedAge": true,
+  "interests": [
+    "Sport",
+    "Food",
+    "Cinema"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66b4f774a452994626195144"
+  },
+  "CIN": "11223344",
+  "parentName": "Alice Johnson",
+  "parentEmail": "alice.johnson@example.com",
+  "parentPassword": "$2a$08$gvpCnT7oylt.kFGZIDv6Me3xyPYHpLBx/lYXUZtrcl88h4dM9TEK.",
+  "phoneNumber": "+1122334455",
+  "address": "789 Pine St, Cityville",
+  "childUsername": "alicekid",
+  "childAge": 10,
+  "governorat": "Tunisia,Sousse",
+  "confirmedAge": true,
+  "interests": [
+    "Sport",
+    "Food",
+    "Cinema"
+  ],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66c61ea28463e820eaed5df6"
+  },
+  "CIN": "003304529",
+  "parentName": "Mehhhhhhhhrrrez",
+  "parentEmail": "Mehhhhhhhrerz@example.com",
+  "parentPassword": "$2a$08$HFa30lVvfiLRXrein.fO3eOzouIIgYCqgUvqnoo6Il4OUDY7zRlx.",
+  "phoneNumber": "22456978",
+  "address": "Med Alii,Gabes",
+  "childUsername": "feryelTest1",
+  "childAge": 14,
+  "governorat": "localisation",
+  "confirmedAge": true,
+  "interests": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66c628b1e9cc27493d13a215"
+  },
+  "CIN": "0033045219",
+  "parentName": "Mehhhhhhhhrrrez",
+  "parentEmail": "Mehhhhhhhhrerz@example.com",
+  "parentPassword": "$2a$08$Uvh3hBkAIJC0remfNRd/o.3wmuPgaLd1zXEckE/ll/sbiJksO3Nay",
+  "phoneNumber": "22456978",
+  "address": "Med Alii,Gabes",
+  "childUsername": "testtest",
+  "childAge": 15,
+  "governorat": "localisation",
+  "confirmedAge": true,
+  "interests": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66c62923e9cc27493d13a217"
+  },
+  "CIN": "0033404529",
+  "parentName": "testother",
+  "parentEmail": "khadraouiferyel@gmail.com",
+  "parentPassword": "$2a$08$9LZh9Ui.0sQpxoQDX6.wDe7YZwEk/BCTxBRNCsAVnbVfOLTOWWgTS",
+  "phoneNumber": "28551765",
+  "address": "tunis",
+  "childUsername": "othertesttttt",
+  "childAge": 15,
+  "governorat": "localisation",
+  "confirmedAge": true,
+  "interests": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66c62c79bb9935d8ef1d87eb"
+  },
+  "parentName": "feryelferyel",
+  "parentEmail": "khadraoui@gmail.com",
+  "parentPassword": "$2a$08$wkK.t2qIFSpTFnFGbJOWsuCsvFXKdtpOfXzarhtddfFDMd.Efz1bG",
+  "phoneNumber": "28551765",
+  "address": "tunis",
+  "childUsername": "tesrtzjgdd",
+  "childAge": 15,
+  "governorat": "localisation",
+  "confirmedAge": true,
+  "interests": [],
+  "__v": 0
+}]
