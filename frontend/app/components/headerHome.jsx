@@ -1,19 +1,28 @@
-import { StyleSheet, Text, View, FlatList,TouchableOpacity,Dimensions,Image} from 'react-native';
-import {React,useState,useEffect} from 'react';
+import { StyleSheet, Text, View, FlatList,TouchableOpacity,Dimensions,Animated,Image,ScrollView} from 'react-native';
+import {React,useState,useEffect,useRef} from 'react';
 import { useFonts } from 'expo-font';
 import Sidebar from '../../assets/SVGs/Sidebar';
 import Profile from '../../assets/SVGs/Profile';
 import ArrowsPic from '../../assets/SVGs/arrows';
 import { FontAwesome } from '@expo/vector-icons';
-import Vector from '../../assets/SVGs/Vector';
 import ProfileIB from '../../assets/SVGs/ProfileIconBox';
 import HeartCircle from '../../assets/SVGs/HeartCircle';
 import { router } from 'expo-router';
 import MapIcon from '../../assets/imgsJsx/map';
 import FilterModal from '../components/filterModal'
 import { SafeAreaView } from 'react-native-safe-area-context';
+import MyProfile from '../../assets/SVGs/MyProfile';
+import MessageCircle from '../../assets/SVGs/MessageCircle';
+import Settings from '../../assets/SVGs/Settings';
+import Calendar from '../../assets/SVGs/Calendar';
+import Bookmark from '../../assets/SVGs/Bookmark';
+import Mail from '../../assets/SVGs/Mail';
+import HelpCircle from '../../assets/SVGs/HelpCircle';
+import Logout from '../../assets/SVGs/Logout';
+import ProfPic from '../../assets/ProfPic.png';
 
 const { width, height } = Dimensions.get('window');
+const sidebarWidth = (202 / 375) * width;
 
 const HeaderHome = () => {
     const [fontsLoaded, err] = useFonts({
@@ -29,13 +38,14 @@ const HeaderHome = () => {
   });
   const [friends, setFriends] = useState([]);
   const [error, setError] = useState(null); 
-  
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+  const sidebarAnimation = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     const userId = '66b4928e4d3f0b7ad9bfd4c8'; 
 
     const fetchSuggestions = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/api/suggest-friends/${userId}`);
+        const response = await fetch(`http://192.168.100.168:3000/api/suggest-friends/${userId}`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -55,20 +65,95 @@ const HeaderHome = () => {
   const GoToViewMorePage = () => {
     router.push('/ViewMorePage');
   };
-
+  const GoToProfilePage = () => {
+    router.push('/(pages)/Profile');
+  };
   //Filter Modal
   const [isFilterModalVisible, setFilterModalVisible] = useState(false);
 
   const toggleFilterModal = () => {
     setFilterModalVisible(!isFilterModalVisible);
   };
+  const toggleSidebar = () => {
+    const toValue = isSidebarVisible ? 0 : 1;
+    Animated.timing(sidebarAnimation, {
+      toValue,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => setIsSidebarVisible(!isSidebarVisible));
+  };
 
+  const sidebarTranslateX = sidebarAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-sidebarWidth, 0], // Sidebar slides in and out
+  });
+
+  const contentTranslateX = sidebarAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, sidebarWidth], // Content slides right
+  });
 
   
   return (
     <SafeAreaView style={styles.container}>
+      <Animated.View style={[styles.sidebar, { transform: [{ translateX: sidebarTranslateX }] }]}>
+      
+        <View style={styles.profilecircle}>
+        <Image
+        source={ProfPic}
+        style={styles.profileImage}
+      />
+        </View>
+        <Text style={styles.Name}>Flen Fouleni</Text>
+        <View style={styles.sidebarContent}>
+
+            <View style={styles.iconContainer}>
+<MyProfile style={styles.prof}/>
+<Text style={styles.myprofileInfo}>My Profile</Text>
+</View>
+
+<View style={styles.iconContainer1}>
+<MessageCircle style={styles.mes}/>
+<Text style={styles.messageInfo}>Message</Text>
+</View>
+
+<View style={styles.iconContainer1}>
+<Calendar style={styles.cal}/>
+<Text style={styles.calendarInfo}>Calendar</Text>
+</View>
+
+<View style={styles.iconContainer1}>
+<Bookmark style={styles.book}/>
+<Text style={styles.bookmarkInfo}>Bookmark</Text>
+</View>
+
+<View style={styles.iconContainer1}>
+<Mail style={styles.mail}/>
+<Text style={styles.mailInfo}>Contact us</Text>
+</View>
+
+<View style={styles.iconContainer1}>
+<Settings style={styles.set}/>
+<Text style={styles.settingsInfo}>Settings</Text>
+</View>
+
+<View style={styles.iconContainer1}>
+<HelpCircle style={styles.help}/>
+<Text style={styles.helpInfo}>Helps & FAQs</Text>
+</View>
+
+<View style={styles.iconContainer1}>
+<Logout style={styles.log}/>
+<Text style={styles.logoutInfo}>Log Out</Text>
+</View>
+        </View>
+        
+      </Animated.View>
+      <Animated.View style={[styles.content, { transform: [{ translateX: contentTranslateX }] }]}>
       <View style={styles.iconRow}>
+      <TouchableOpacity onPress={toggleSidebar}>
         <Sidebar style={styles.icon} />
+        </TouchableOpacity>
         <View style={styles.searchContainer}>
           <FontAwesome name="search" size={18} color="#000000" style={styles.searchIcon} />
         </View>
@@ -80,7 +165,9 @@ const HeaderHome = () => {
         </TouchableOpacity>
         <FilterModal style={styles.modalStyle} isVisible={isFilterModalVisible} onClose={toggleFilterModal} />
 
-        <Profile style={styles.ProfilePic} />
+        <TouchableOpacity onPress={GoToProfilePage}>
+          <Profile style={styles.ProfilePic} />
+          </TouchableOpacity>
       </View>
       {/* <View style={styles.titleContainer}>
         <Text style={styles.Suggest}>Friends Suggestions</Text>
@@ -120,6 +207,7 @@ const HeaderHome = () => {
           contentContainerStyle={styles.contentContainer}
         />
       </View>
+      </Animated.View>
     </SafeAreaView>
   );
 };
@@ -129,16 +217,109 @@ export default HeaderHome;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: height * 0.05, // Dynamic paddingTop
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
   },
-  
-  iconRow: {
+  iconContainer:{
     flexDirection: 'row',
-    alignItems: 'center',
-    width: '95%',
-    paddingHorizontal: width * 0.05, 
-  },
+    },
+    sidebar: {
+      position: 'absolute',
+      top: (20 / 375) * width, // Adjusts top position based on screen width
+      bottom: 0,
+      left: 0,
+      right: sidebarWidth, // Adjusts to the width defined
+      width: sidebarWidth, // Fixed width for the sidebar
+      borderRadius: 16,
+      backgroundColor: '#FFFFFF',
+      borderColor: '#4D4D4D',
+      borderWidth: 1,
+      zIndex: 2,
+      padding: 20,
+      flexDirection: 'column', // Ensure the layout is column-based
+      flex: 1,
+    },
+    sidebarContent: {
+      alignItems: 'flex-start', // Align items to the start
+      justifyContent: 'flex-start', // Align items from the top
+      flexGrow: 1, // Allow content to expand
+      paddingBottom: 20, // Extra space at the bottom
+    },
+    profilecircle:{
+      width: 58,
+      height: 58,
+      borderRadius: 29,
+      borderColor: '#1C3F83',
+       borderWidth: 1,
+       overflow: 'hidden', 
+        justifyContent: 'center', 
+        alignItems: 'center',
+    },
+    iconContainer1:{
+      flexDirection: 'row',
+      marginTop: 32,
+      },
+      mail:{
+        right: 3,
+        },
+        
+       mailInfo:{
+        fontFamily: 'Poppins-SemiBold',
+        fontSize: 16,
+        fontWeight: '600',
+        marginLeft: 10,
+        },
+      iconContainer1:{
+        flexDirection: 'row',
+        marginTop: 32,
+        },
+        set:{
+          right: 13,
+          },
+          
+          settingsInfo:{
+          fontFamily: 'Poppins-SemiBold',
+          fontSize: 16,
+          fontWeight: '600',
+          marginRight: 12,
+          },
+        iconContainer1:{
+          flexDirection: 'row',
+          marginTop: 32,
+          },
+          help:{
+            left: 12,
+            },
+            
+            helpInfo:{
+            fontFamily: 'Poppins-SemiBold',
+            fontSize: 16,
+            fontWeight: '600',
+            marginLeft: 26,
+            },
+          iconContainer1:{
+            flexDirection: 'row',
+            marginTop: 32,
+            },
+
+            log:{
+              right: 17,
+              },
+              
+             logoutInfo:{
+              fontFamily: 'Poppins-SemiBold',
+              fontSize: 16,
+              fontWeight: '600',
+              marginRight: 14,
+              },
+              iconRow: {
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '95%',
+                paddingHorizontal: width * 0.15, 
+                marginTop: height * 0.02, 
+              },
   iconTextContainer1: {
     width: (118/180)*width,
     flexDirection: 'row',
@@ -146,6 +327,13 @@ const styles = StyleSheet.create({
     marginTop: (15/812)*height,
     marginLeft: (31/90)*width,  
   },
+  Name:{
+    fontSize: 20,
+    fontWeight: '500',
+    fontFamily: 'Poppins-Medium',
+    marginTop: 9,
+    marginRight: 16,
+    },
   iconTextContainer2: {
     width: (142/375)*width,
     flexDirection: 'row',
@@ -184,6 +372,72 @@ const styles = StyleSheet.create({
     
   },
 
+  prof:{
+    right: 15,
+    },
+    
+    myprofileInfo:{
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 16,
+    fontWeight: '600',
+    },
+    
+    iconContainer:{
+    flexDirection: 'row',
+    },
+    
+    iconContainer1:{
+      flexDirection: 'row',
+      marginTop: 32,
+    },
+    
+    mes:{
+      right: 17,
+      top:3,
+      },
+      
+      messageInfo:{
+      fontFamily: 'Poppins-SemiBold',
+      fontSize: 16,
+      fontWeight: '600',
+      },
+      cal:{
+        right: 15,
+        },
+        
+        calendarInfo:{
+        fontFamily: 'Poppins-SemiBold',
+        fontSize: 16,
+        fontWeight: '600',
+        },
+        help:{
+          left: 12,
+          },
+    iconContainer1:{
+    flexDirection: 'row',
+    marginTop: 32,
+    },
+    
+    book:{
+      right: 8,
+      },
+      
+      bookmarkInfo:{
+      fontFamily: 'Poppins-SemiBold',
+      fontSize: 16,
+      fontWeight: '600',
+      marginLeft: 7,
+      },
+      log:{
+        right: 17,
+        },
+        
+       logoutInfo:{
+        fontFamily: 'Poppins-SemiBold',
+        fontSize: 16,
+        fontWeight: '600',
+        marginRight: 14,
+        },
   ArrowInput:{
     width: width * 0.05, 
     height: height * 0.025, 
@@ -294,7 +548,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#56A7FF',
     borderWidth: 1,
     borderColor: '#FFFFFF',
-    top: (160/812)*height, 
+    top: (150/812)*height, 
     position: 'absolute',
     shadowColor: '#56A7FF', // shadow color
     shadowOffset: { width: 0, height: 4 }, // shadow offset

@@ -9,6 +9,7 @@ const PagesLayout = () => {
         <Stack>
             <Stack.Screen name="search" options={{headerShown : false}} />
             <Stack.Screen name="eventDetails" options={{headerShown : false}} />
+            <Stack.Screen name="Profile" options={{headerShown : false}} />
         </Stack>
     </>
   )

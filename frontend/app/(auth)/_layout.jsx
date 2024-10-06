@@ -8,6 +8,7 @@ import PersonalInfo from './sign-up1';
 import SignUp2 from './sign-up2';
 import Payment from './sign-up3';
 import SignIn from './sign-in';
+import InterestsSelectionScreen from './interests';
 
 // Configuration for sign-up screens
 const signUpConfig = {
@@ -79,13 +80,6 @@ const AuthLayout = () => {
       <Stack.Screen
         name="onboarding1"
         component={OnboardingScreen1}
-        options={{
-          transitionSpec: {
-            open: onboardingConfig,
-            close: onboardingConfig,
-          },
-          cardStyleInterpolator: forScaleAndFade,
-        }}
       />
       <Stack.Screen
         name="onboarding2"
@@ -148,6 +142,17 @@ const AuthLayout = () => {
       <Stack.Screen 
       name="sign-in" 
       component={SignIn}
+      options={{
+        transitionSpec: {
+          open: signUpConfig,
+          close: signUpConfig,
+        },
+        cardStyleInterpolator: forSlideAndFade,
+      }}
+      />
+      <Stack.Screen 
+      name="interests" 
+      component={InterestsSelectionScreen}
       options={{
         transitionSpec: {
           open: signUpConfig,

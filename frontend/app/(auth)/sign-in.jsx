@@ -52,7 +52,7 @@ const SignIn = () => {
       }
 
       // Make API request
-      const response = await fetch('http://192..168.1.243:3000/api/auth/signin', {
+      const response = await fetch('http://192.168.100.168:3000/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,6 +68,7 @@ const SignIn = () => {
       if (response.ok) {
         Alert.alert('Sign-in successful!');
         console.log('Sign-in successful');
+        router.push('/interests');
       } else {
         // Error in sign-in, handle error (e.g., display error message)
         Alert.alert('Sign In Failed', data.message || 'Something went wrong');
